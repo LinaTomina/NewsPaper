@@ -2,13 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
 
-
 class Author(models.Model):
     user = models.OnetoOneField(User, on_delete = models.CASCADE)
     author_rating = models.IntegerField(default = 0, verbose_name = 'Рейтинг автора')
 
     def update_rating(self):
-        self.author_rating = (Post.post_rating * 3) + Comment.comment_rating + Comment.comment_rating
+        self.author_rating = (Post.post_rating * 3) + Comment.user.comment_rating + Comment.post.comment_rating
         self.save()
 
 class Category(models.Model):
